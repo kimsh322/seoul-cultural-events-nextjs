@@ -1,13 +1,18 @@
 import Header from "@/components/Header";
 import GlobalStyle from "@/styles/GlobalStyle";
 import type { AppProps } from "next/app";
+import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
   return (
-    <>
-      <GlobalStyle />
-      <Header />
-      <Component {...pageProps} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <GlobalStyle />
+        <Header />
+        <Component {...pageProps} />
+      </Hydrate>
+    </QueryClientProvider>
   );
 }
