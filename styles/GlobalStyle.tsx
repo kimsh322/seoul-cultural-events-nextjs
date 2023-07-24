@@ -8,10 +8,16 @@ const styles = css`
   }
   html {
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   body {
     font-family: "Noto Sans KR", sans-serif;
+    width: 100vw;
+    max-width: 1000px;
   }
 `;
 
