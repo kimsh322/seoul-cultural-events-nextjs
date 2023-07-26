@@ -1,41 +1,58 @@
-import { getEvents } from "@/util/get-events";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { getAllEvents, getEvents } from "@/util/fetch-events";
+import { dehydrate, QueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import EventCard from "./EventCard";
 import { Box } from "@mui/material";
+import { AxiosError } from "axios";
 
 export default function AllEvents() {
-  // 캐싱된 데이터를 useQuery로 필요한 곳에서 가져온다.
-  const { data, error, isError, isLoading } = useQuery({
+  // 무한 스크롤 구현
+  const { data, fetchNextPage, error, isError, status } = useInfiniteQuery<any, AxiosError>({
     queryKey: ["events"],
     queryFn: getEvents,
+    getNextPageParam: (_, allPage) => {
+      // 다음 페이지 계산
+      const nextPage = 12 + allPage.length * 12;
+      if (nextPage > 1000) return false;
+      return nextPage;
+    },
   });
 
-  if (isError) return <div>데이터를 가져오는데 실패했습니다.</div>;
+  if (isError) return <div>{error.message}</div>;
 
-  if (isLoading) return <p>Loading...</p>;
+  if (status === "loading") return <p>Loading...</p>;
 
-  const eventsArr = data.culturalEventInfo.row;
   return (
     <Box
       sx={{
         display: "grid",
-        "grid-template-columns": "repeat(3, 1fr)",
+        gridTemplateColumns: "repeat(3, 1fr)",
         justifyContent: "center",
         justifyItems: "center",
         marginTop: 2,
       }}
     >
-      {eventsArr.map((event: any) => {
-        return <EventCard title={event.TITLE} date={event.DATE} img={event.MAIN_IMG} />;
+      {/* 무한 스크롤 렌더링, 이중 배열 구조로 되어있다. */}
+      {data.pages.map((group) => {
+        return group.culturalEventInfo.row.map((event: any) => {
+          return (
+            <EventCard
+              key={event.TITLE}
+              title={event.TITLE}
+              date={event.DATE}
+              img={event.MAIN_IMG}
+            />
+          );
+        });
       })}
+      <button onClick={() => fetchNextPage()}>더 불러오기</button>
     </Box>
   );
 }
 
 export async function getStaticProps() {
-  // 모든 events 데이터 사전 fetching && caching
+  // 첫 화면에서 보여줄 일부 events 데이터 사전 fetching
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["events"], getEvents);
+  await queryClient.prefetchQuery(["events"], getAllEvents);
 
   return {
     props: {
