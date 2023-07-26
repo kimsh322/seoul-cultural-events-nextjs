@@ -23,7 +23,7 @@ export default function EventCard({ title, img, date }: EventCardProps) {
     >
       <CardMedia component="img" height="200" image={`${img}`} alt={`${title}`} />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div" sx={{ height: 80 }}>
+        <Typography gutterBottom variant="h6" component="div" sx={{ height: 90 }}>
           {title}
         </Typography>
         <Typography variant="body2">{date}</Typography>
