@@ -5,12 +5,11 @@ import {
   QueryClient,
   useInfiniteQuery,
 } from "@tanstack/react-query";
-import EventCard from "./EventCard";
-import { Box } from "@mui/material";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import CircularProgress from "@mui/material/CircularProgress";
+import EventCardsBox from "./EventCardsBox";
+import Loading from "../Loading";
 
 // 다음 페이지 계산하는 콜백함수
 const getNextPageParam: GetNextPageParamFunction = (_, allPage) => {
@@ -34,43 +33,12 @@ export default function AllEvents() {
 
   if (isError) return <div>{error.message}</div>;
 
-  if (status === "loading")
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-
-  return (
+  return status === "loading" ? (
+    <Loading />
+  ) : (
     <>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          justifyContent: "center",
-          justifyItems: "center",
-          marginTop: 2,
-        }}
-      >
-        {/* 무한 스크롤 렌더링, 이중 배열 구조로 되어있다. */}
-        {data.pages.map((group) => {
-          return group.culturalEventInfo.row.map((event: any) => {
-            return (
-              <EventCard
-                key={event.TITLE}
-                title={event.TITLE}
-                date={event.DATE}
-                img={event.MAIN_IMG}
-              />
-            );
-          });
-        })}
-      </Box>
-      {isFetchingNextPage && (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <CircularProgress />
-        </Box>
-      )}
+      <EventCardsBox data={data} />
+      {isFetchingNextPage && <Loading />}
       <div ref={ref} style={{ height: 50 }} />
     </>
   );
