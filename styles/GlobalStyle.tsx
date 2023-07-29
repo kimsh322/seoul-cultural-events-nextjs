@@ -19,6 +19,10 @@ const styles = css`
     width: 100vw;
     max-width: 1000px;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 const GlobalStyle = () => {
