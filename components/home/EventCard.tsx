@@ -1,6 +1,8 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import type { Event } from "./event.d.ts";
 import Link from "next/link.js";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const cardStyle = {
   width: 300,
@@ -23,11 +25,13 @@ export default function EventCard({ event, eventId }: EventCardProps) {
   return (
     <Link href={`/events/${eventId}`}>
       <Card sx={cardStyle}>
-        <CardMedia
-          component="img"
+        <LazyLoadImage
+          style={{ objectFit: "cover" }}
+          width="300"
           height="200"
-          image={`${event.MAIN_IMG}`}
+          src={`${event.MAIN_IMG}`}
           alt={`${event.TITLE}`}
+          effect="opacity"
         />
         <CardContent>
           <Typography gutterBottom variant="h6" component="div" sx={{ height: 90 }}>
