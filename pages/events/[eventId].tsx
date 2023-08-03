@@ -1,12 +1,14 @@
+import EventBox from "@/components/event/EventBox";
+import { Event } from "@/components/home/event";
 import { getEvent } from "@/util/fetch-events";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export default function EventDetailPage({
   event,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const eventData = event.culturalEventInfo.row[0];
+  const eventData: Event = event.culturalEventInfo.row[0];
 
-  return <div>{eventData.TITLE}</div>;
+  return <EventBox event={eventData} />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

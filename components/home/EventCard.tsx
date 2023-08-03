@@ -29,8 +29,8 @@ export default function EventCard({ event, eventId }: EventCardProps) {
           style={{ objectFit: "cover" }}
           width="300"
           height="200"
-          src={`${event.MAIN_IMG}`}
-          alt={`${event.TITLE}`}
+          src={event.MAIN_IMG}
+          alt={event.TITLE}
           effect="opacity"
         />
         <CardContent>
