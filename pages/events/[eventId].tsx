@@ -6,6 +6,9 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 export default function EventDetailPage({
   event,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  //에러처리
+  if (typeof event === "string") return <div>{event}</div>;
+
   const eventData: Event = event.culturalEventInfo.row[0];
 
   return <EventBox event={eventData} />;
