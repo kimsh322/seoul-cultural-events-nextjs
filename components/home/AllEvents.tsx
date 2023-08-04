@@ -31,6 +31,12 @@ export default function AllEvents() {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  useEffect(() => {
+    const scrollY = localStorage.getItem("scrollY");
+    console.log(scrollY);
+    if (scrollY !== "0") window.scrollTo(0, Number(scrollY));
+  }, []);
+
   if (isError) return <div>{error.message}</div>;
 
   return status === "loading" ? (

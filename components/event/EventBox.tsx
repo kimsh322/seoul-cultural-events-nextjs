@@ -13,7 +13,7 @@ export default function EventBox({ event }: Props) {
       <h2>{event.TITLE}</h2>
       <EventContentsContainer>
         <div className="image-box">
-          <Image src={event.MAIN_IMG} alt={event.TITLE} fill={true} objectFit="cover" />
+          <Image src={event.MAIN_IMG} alt={event.TITLE} fill={true} sizes={"auto"} />
         </div>
         <EventDetail event={event} />
       </EventContentsContainer>

@@ -22,8 +22,13 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event, eventId }: EventCardProps) {
+  // 클릭한 위치 기억
+  const setScrollY = () => {
+    localStorage.setItem("scrollY", String(window.scrollY));
+  };
+
   return (
-    <Link href={`/events/${eventId}`}>
+    <Link href={`/events/${eventId}`} onClick={setScrollY}>
       <Card sx={cardStyle}>
         <LazyLoadImage
           style={{ objectFit: "cover" }}
