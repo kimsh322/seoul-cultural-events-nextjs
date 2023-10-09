@@ -1,5 +1,5 @@
 import EventBox from "@/components/event/EventBox";
-import { Event } from "@/components/home/event";
+import { Event } from "@/components/all-events/event";
 import { getEvent } from "@/util/fetch-events";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
