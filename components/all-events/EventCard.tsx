@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography } from "@mui/material";
-import type { Event } from "./event.d.ts";
+import type { Event } from "./event.js";
 import Link from "next/link.js";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/opacity.css";
@@ -24,7 +24,9 @@ interface EventCardProps {
 export default function EventCard({ event, eventId }: EventCardProps) {
   // 클릭한 위치 기억
   const setScrollY = () => {
-    localStorage.setItem("scrollY", String(window.scrollY));
+    const windowY = window.scrollY;
+    console.log(windowY);
+    sessionStorage.setItem("scrollY", String(windowY));
   };
 
   return (

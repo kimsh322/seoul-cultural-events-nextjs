@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { InfiniteData } from "@tanstack/react-query";
 import EventCard from "./EventCard";
-import type { Event } from "./event.d.ts";
+import type { Event } from "./event";
 
 const boxStyle = {
   display: "grid",

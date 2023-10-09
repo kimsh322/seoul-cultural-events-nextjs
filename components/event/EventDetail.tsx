@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Event } from "../home/event";
+import { Event } from "../all-events/event";
 
 interface Props {
   event: Event;

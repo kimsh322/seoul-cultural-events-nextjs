@@ -1,22 +1,10 @@
-import { getAllEvents, getScrollEvents } from "@/util/fetch-events";
-import {
-  dehydrate,
-  GetNextPageParamFunction,
-  QueryClient,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { getAllEvents, getScrollEvents, getNextPageParam } from "@/util/fetch-events";
+import { dehydrate, QueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import EventCardsBox from "./EventCardsBox";
 import Loading from "../Loading";
-
-// 다음 페이지 계산하는 콜백함수
-const getNextPageParam: GetNextPageParamFunction = (_, allPage) => {
-  const nextPage = (1 + allPage.length) * 12;
-  if (nextPage > 1000) return false;
-  return nextPage;
-};
 
 export default function AllEvents() {
   const { ref, inView } = useInView();
@@ -31,10 +19,13 @@ export default function AllEvents() {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  // 스크롤 위치 기억
   useEffect(() => {
-    const scrollY = localStorage.getItem("scrollY");
-    console.log(scrollY);
-    if (scrollY !== "0") window.scrollTo(0, Number(scrollY));
+    const scrollY = sessionStorage.getItem("scrollY") ?? "0";
+    if (scrollY !== "0") {
+      setTimeout(() => window.scrollTo(0, Number(scrollY)), 300);
+      sessionStorage.removeItem("scrollY");
+    }
   }, []);
 
   if (isError) return <div>{error.message}</div>;
