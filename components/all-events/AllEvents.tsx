@@ -1,5 +1,5 @@
-import { getAllEvents, getScrollEvents, getNextPageParam } from "@/util/fetch-events";
-import { dehydrate, QueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import { getScrollEvents, getNextPageParam } from "@/util/fetch-events";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -29,26 +29,12 @@ export default function AllEvents() {
   }, []);
 
   if (isError) return <div>{error.message}</div>;
-
-  return status === "loading" ? (
-    <Loading />
-  ) : (
+  if (status === "loading") return <Loading />;
+  return (
     <>
       <EventCardsBox data={data} />
       {isFetchingNextPage && <Loading />}
       <div ref={ref} style={{ height: 50 }} />
     </>
   );
-}
-
-export async function getStaticProps() {
-  // 첫 화면에서 보여줄 일부 events 데이터 사전 fetching
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(["events"], getAllEvents);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
 }

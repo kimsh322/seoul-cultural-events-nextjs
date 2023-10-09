@@ -2,8 +2,8 @@ import axios from "axios";
 import { GetNextPageParamFunction } from "@tanstack/react-query";
 
 // 모든 events get 함수
-export async function getAllEvents() {
-  const total = 12;
+export async function getLatestEvents() {
+  const total = 3;
   const response = await axios.get(
     `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_CULTURAL_EVENTS_AUTHORIZE}/json/culturalEventInfo/1/${total}/`
   );

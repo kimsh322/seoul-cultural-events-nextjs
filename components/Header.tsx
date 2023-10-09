@@ -1,5 +1,5 @@
-import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Box, Toolbar } from "@mui/material";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -9,15 +9,7 @@ export default function Header() {
         sx={{ width: 1, maxWidth: 1000, left: 0, top: 0, backgroundColor: "skyblue" }}
       >
         <Toolbar>
-          <IconButton
-            sx={{ mr: 2 }}
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <Link href="/allevents">전부보기</Link>
         </Toolbar>
       </AppBar>
     </Box>
