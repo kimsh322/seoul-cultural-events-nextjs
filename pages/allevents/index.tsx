@@ -1,7 +1,5 @@
 import AllEvents from "@/components/all-events/AllEvents";
 
-const AllEventsPage = () => {
+export default function AllEventsPage() {
   return <AllEvents />;
-};
-
-export default AllEventsPage;
+}

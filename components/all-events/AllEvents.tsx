@@ -1,5 +1,5 @@
 import { getScrollEvents, getNextPageParam } from "@/util/fetch-events";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -11,8 +11,8 @@ export default function AllEvents() {
 
   // 무한 스크롤 구현
   // prettier-ignore
-  const { data, fetchNextPage, error, isError, status, isFetchingNextPage } = 
-  useInfiniteQuery<any, AxiosError>({queryKey: ["events"], queryFn: getScrollEvents, getNextPageParam});
+  const { data, fetchNextPage, error, isError, isFetchingNextPage } = 
+  useInfiniteQuery<any, AxiosError>({queryKey: ["events"], queryFn: getScrollEvents, getNextPageParam,suspense : true});
 
   useEffect(() => {
     // ref가 view에 들어오면 함수 실행
@@ -29,10 +29,10 @@ export default function AllEvents() {
   }, []);
 
   if (isError) return <div>{error.message}</div>;
-  if (status === "loading") return <Loading />;
+
   return (
     <>
-      <EventCardsBox data={data} />
+      <EventCardsBox data={data as InfiniteData<any>} />
       {isFetchingNextPage && <Loading />}
       <div ref={ref} style={{ height: 50 }} />
     </>

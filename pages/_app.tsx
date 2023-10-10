@@ -2,8 +2,9 @@ import Header from "@/components/Header";
 import GlobalStyle from "@/styles/GlobalStyle";
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Loading from "@/components/Loading";
 
 export default function App({ Component, pageProps }: AppProps) {
   // 렌더링시 새로운 인스턴스 생성
@@ -14,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <Hydrate state={pageProps.dehydratedState}>
         <GlobalStyle />
         <Header />
-        <Component {...pageProps} />
+        <Suspense fallback={<Loading />}>
+          <Component {...pageProps} />
+        </Suspense>
       </Hydrate>
       <ReactQueryDevtools />
     </QueryClientProvider>
