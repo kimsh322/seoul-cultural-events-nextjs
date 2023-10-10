@@ -11,7 +11,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
-      {/* AllEvents 페이지에서 StaticProps로 받은 dehydratedState 적용 */}
       <Hydrate state={pageProps.dehydratedState}>
         <GlobalStyle />
         <Header />

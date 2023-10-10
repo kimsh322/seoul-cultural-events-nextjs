@@ -17,7 +17,7 @@ const styles = css`
   body {
     font-family: "Noto Sans KR", sans-serif;
     width: 100vw;
-    max-width: 1000px;
+    max-width: 1024px;
   }
 
   a {
