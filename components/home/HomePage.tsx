@@ -20,8 +20,12 @@ export default function HomePage() {
         <Box
           sx={{
             bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
+            pt: 20,
+            pb: 16,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundImage: `url("/images/home-image.jpg")`,
           }}
         >
           <Container maxWidth="sm">

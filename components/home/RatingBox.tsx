@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import { UseQueryResult } from "@tanstack/react-query";
 import { Event } from "../all-events/event";
-import EventCard from "../all-events/EventCard";
+import RatingCard from "./RatingCard";
 
 interface Props {
   ratingName: string;
@@ -14,17 +14,9 @@ export default function RatingBox({ ratingName, data }: Props) {
   return (
     <Container sx={{ paddingTop: "20px" }}>
       <Box>{ratingName}</Box>
-      <Box
-        sx={{
-          width: 1,
-          height: 400,
-          display: "flex",
-          overflowX: "scroll",
-          backgroundColor: "primary.dark",
-        }}
-      >
+      <Box sx={{ width: 1, height: 350, display: "flex", overflowX: "scroll" }}>
         {events.map((event, idx) => {
-          return <EventCard key={event.TITLE} event={event} eventId={idx + 1} />;
+          return <RatingCard key={event.TITLE} event={event} eventId={idx + 1} />;
         })}
       </Box>
     </Container>
