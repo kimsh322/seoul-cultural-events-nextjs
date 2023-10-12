@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
+import Footer from "../Footer";
 import { Event } from "../all-events/event";
-import Image from "next/image";
 import EventDetail from "./EventDetail";
+import { CardMedia, Container, Grid, Typography } from "@mui/material";
 
 interface Props {
   event: Event;
@@ -9,35 +9,26 @@ interface Props {
 
 export default function EventBox({ event }: Props) {
   return (
-    <EventBoxContainer>
-      <h2>{event.TITLE}</h2>
-      <EventContentsContainer>
-        <div className="image-box">
-          <Image src={event.MAIN_IMG} alt={event.TITLE} fill={true} sizes={"auto"} />
-        </div>
-        <EventDetail event={event} />
-      </EventContentsContainer>
-    </EventBoxContainer>
+    <>
+      <Container sx={{ pt: 5, bgcolor: "#FFF2D8" }}>
+        <Typography component="h4" variant="h4" align="center" color="text.primary" gutterBottom>
+          {event.TITLE}
+        </Typography>
+        <Grid container spacing={2} columns={10}>
+          <Grid item xs={4}>
+            <CardMedia
+              component="div"
+              sx={{
+                width: "350px",
+                height: "500px",
+              }}
+              image={event.MAIN_IMG}
+            />
+          </Grid>
+          <EventDetail event={event} />
+        </Grid>
+      </Container>
+      <Footer />
+    </>
   );
 }
-
-const EventBoxContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: gray;
-  padding: 1%;
-  .image-box {
-    width: 40%;
-    height: 80vh;
-    position: relative;
-    object-fit: cover;
-  }
-`;
-
-const EventContentsContainer = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 1%;
-`;

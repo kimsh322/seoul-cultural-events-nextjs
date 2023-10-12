@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import EventCardsBox from "./EventCardsBox";
 import Loading from "../Loading";
+import { Container } from "@mui/material";
 
 export default function AllEvents() {
   const { ref, inView } = useInView();
@@ -31,10 +32,10 @@ export default function AllEvents() {
   if (isError) return <div>{error.message}</div>;
 
   return (
-    <>
+    <Container sx={{ bgcolor: "#FFF2D8" }}>
       <EventCardsBox data={data as InfiniteData<any>} />
       {isFetchingNextPage && <Loading />}
       <div ref={ref} style={{ height: 50 }} />
-    </>
+    </Container>
   );
 }

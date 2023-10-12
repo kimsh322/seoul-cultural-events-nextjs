@@ -1,42 +1,40 @@
-import styled from "@emotion/styled";
 import { Event } from "../all-events/event";
+import { Button, Grid } from "@mui/material";
 
 interface Props {
   event: Event;
 }
 
 export default function EventDetail({ event }: Props) {
+  const eventInfo = [
+    ["출연", event.PLAYER],
+    ["대상", event.USE_TRGT],
+    ["장소", event.PLACE],
+    ["이용요금", event.USE_FEE],
+    ["신청일", event.RGSTDATE],
+    ["기간", event.DATE],
+  ];
+
   return (
-    <EventDetailContainer>
-      <div className="grid-box">
-        <div>분류 : {event.CODENAME}</div>
-        <div>출연 : {event.PLAYER}</div>
-        <div>지역 : {event.GUNAME}</div>
-        <div>장소 : {event.PLACE}</div>
-      </div>
-      <span className="line">기간 : {event.DATE}</span>
-      <span className="line">신청일 : {event.RGSTDATE}</span>
-      <span className="line">이용요금 : {event.USE_FEE}</span>
-      <a href={event.ORG_LINK} target="_blank">
-        자세히보기
-      </a>
-    </EventDetailContainer>
+    <Grid item xs={6}>
+      <Grid container sx={{ pt: 3, pb: 5 }} spacing={2}>
+        {eventInfo.map((eventItem) => {
+          return (
+            <Grid key={eventItem[0]} item xs={12} sx={{ fontSize: "1.5rem" }}>
+              {eventItem[0]} : {eventItem[1]}
+            </Grid>
+          );
+        })}
+      </Grid>
+      <Button
+        variant="contained"
+        sx={{ bgcolor: "#001524" }}
+        href={event.ORG_LINK}
+        target="_blank"
+        size="large"
+      >
+        자세히 보러가기
+      </Button>
+    </Grid>
   );
 }
-
-const EventDetailContainer = styled.div`
-  display: flex;
-  width: 60%;
-  flex-direction: column;
-  padding: 2%;
-  font-size: 1.3em;
-  .grid-box {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px 0;
-    margin-bottom: 5%;
-  }
-  .line {
-    margin-bottom: 5%;
-  }
-`;
