@@ -16,7 +16,6 @@ export async function connectDatabase() {
 export async function insertDocument(client: MongoClient, collection: string, comment: Comment) {
   // 'events' db에 연결
   const db = client.db("events");
-  // collection 'newsletter'에 key, value 입력
   const result = await db.collection(collection).insertOne(comment);
   return result;
 }

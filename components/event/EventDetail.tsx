@@ -9,10 +9,11 @@ export default function EventDetail({ event }: Props) {
   const eventInfo = [
     ["출연", event.PLAYER],
     ["대상", event.USE_TRGT],
+    ["분류", event.CODENAME],
     ["장소", event.PLACE],
     ["이용요금", event.USE_FEE],
-    ["신청일", event.RGSTDATE],
     ["기간", event.DATE],
+    ["프로그램 설명", event.PROGRAM],
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function EventDetail({ event }: Props) {
         {eventInfo.map((eventItem) => {
           return (
             <Grid key={eventItem[0]} item xs={12} sx={{ fontSize: "1.5rem" }}>
-              {eventItem[0]} : {eventItem[1]}
+              {eventItem[1] && `${eventItem[0]} : ${eventItem[1]}`}
             </Grid>
           );
         })}

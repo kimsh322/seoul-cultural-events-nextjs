@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import NewComment from "./NewComment";
+import NewComment, { PostComment } from "./NewComment";
+import CommentList from "./CommentList";
+import { ObjectId } from "mongodb";
+import Loading from "../Loading";
 
-function Comments(props: any) {
-  const { eventId } = props;
+export interface Comment extends PostComment {
+  eventId: string;
+  _id?: ObjectId;
+}
 
+interface Props {
+  eventId: string;
+}
+
+function Comments({ eventId }: Props) {
   const [showComments, setShowComments] = useState(false);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [isFetchingComments, setIsFetchingComments] = useState(false);
 
   useEffect(() => {
@@ -24,7 +34,7 @@ function Comments(props: any) {
     setShowComments((prevStatus) => !prevStatus);
   }
 
-  function addCommentHandler(commentData: Comment) {
+  function addCommentHandler(commentData: PostComment) {
     // send data to API
     fetch(`/api/comments/${eventId}`, {
       method: "POST",
@@ -46,7 +56,9 @@ function Comments(props: any) {
   return (
     <section>
       <button onClick={toggleCommentsHandler}>{showComments ? "Hide" : "Show"} Comments</button>
-      {showComments && <NewComment onAddComment={addCommentHandler} />}
+      {showComments && <NewComment addCommentHandler={addCommentHandler} />}
+      {showComments && !isFetchingComments && <CommentList items={comments} />}
+      {showComments && isFetchingComments && <Loading />}
     </section>
   );
 }

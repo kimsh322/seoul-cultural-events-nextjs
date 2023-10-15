@@ -1,8 +1,11 @@
-import { Comment, connectDatabase, getAllComments, insertDocument } from "@/util/db-util";
+import { connectDatabase, getAllComments, insertDocument } from "@/util/db-util";
 import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
-interface NewComment extends Comment {
+interface NewComment {
+  nickname: string;
+  comment: string;
+  password: string;
   eventId: string;
   _id?: ObjectId;
 }

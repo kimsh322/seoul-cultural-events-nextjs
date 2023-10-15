@@ -1,20 +1,30 @@
 import { useRef } from "react";
 
-export default function NewComment(props: any) {
+export interface PostComment {
+  nickname: string;
+  comment: string;
+  password: string;
+}
+
+interface Props {
+  addCommentHandler: (commentData: PostComment) => void;
+}
+
+export default function NewComment({ addCommentHandler }: Props) {
   const nicknameInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
   function sendCommentHandler(event: React.FormEvent) {
     event.preventDefault();
-    let enteredNickname;
-    let enteredComment;
-    let enteredPassword;
+    let enteredNickname = "";
+    let enteredComment = "";
+    let enteredPassword = "";
     if (nicknameInputRef.current !== null) enteredNickname = nicknameInputRef.current.value;
     if (commentInputRef.current !== null) enteredComment = commentInputRef.current.value;
     if (passwordInputRef.current !== null) enteredPassword = passwordInputRef.current.value;
 
-    props.onAddComment({
+    addCommentHandler({
       nickname: enteredNickname,
       comment: enteredComment,
       password: enteredPassword,
