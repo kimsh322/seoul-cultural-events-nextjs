@@ -7,9 +7,9 @@ interface Props {
 export default function CommentList({ items }: Props) {
   return (
     <ul>
-      {items.map((item: any) => {
+      {items.toReversed().map((item: Comment) => {
         return (
-          <li key={item._id}>
+          <li key={item._id.toString()}>
             <p>{item.comment}</p>
             <div>
               <address>By {item.nickname}</address>

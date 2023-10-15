@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import Loading from "../Loading";
 
 export interface PostComment {
   nickname: string;
@@ -8,12 +9,27 @@ export interface PostComment {
 
 interface Props {
   addCommentHandler: (commentData: PostComment) => void;
+  isLoadingPostComment: boolean;
+  isPostSuccess: boolean;
 }
 
-export default function NewComment({ addCommentHandler }: Props) {
+export default function NewComment({
+  addCommentHandler,
+  isLoadingPostComment,
+  isPostSuccess,
+}: Props) {
   const nicknameInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
+
+  // post요청 성공시 input태그 초기화
+  useEffect(() => {
+    if (isPostSuccess) {
+      if (nicknameInputRef.current !== null) nicknameInputRef.current.value = "";
+      if (commentInputRef.current !== null) commentInputRef.current.value = "";
+      if (passwordInputRef.current !== null) passwordInputRef.current.value = "";
+    }
+  }, [isPostSuccess]);
 
   function sendCommentHandler(event: React.FormEvent) {
     event.preventDefault();
@@ -32,22 +48,25 @@ export default function NewComment({ addCommentHandler }: Props) {
   }
 
   return (
-    <form onSubmit={sendCommentHandler}>
-      <div>
+    <>
+      <form onSubmit={sendCommentHandler}>
         <div>
-          <label htmlFor="email">Nickname</label>
-          <input id="nickname" ref={nicknameInputRef} />
+          <div>
+            <label htmlFor="email">Nickname</label>
+            <input id="nickname" ref={nicknameInputRef} />
+          </div>
+          <div>
+            <label htmlFor="name">password</label>
+            <input type="text" id="password" ref={passwordInputRef} />
+          </div>
         </div>
         <div>
-          <label htmlFor="name">password</label>
-          <input type="text" id="password" ref={passwordInputRef} />
+          <label htmlFor="comment">Your comment</label>
+          <textarea id="comment" rows={5} ref={commentInputRef}></textarea>
         </div>
-      </div>
-      <div>
-        <label htmlFor="comment">Your comment</label>
-        <textarea id="comment" rows={5} ref={commentInputRef}></textarea>
-      </div>
-      <button>Submit</button>
-    </form>
+        <button>Submit</button>
+      </form>
+      {isLoadingPostComment && <Loading />}
+    </>
   );
 }
