@@ -5,10 +5,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Comments from "@/components/comments/Comments";
 import Footer from "@/components/Footer";
 
-export default function EventDetailPage({
-  event,
-  eventId,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function EventDetailPage({ event, eventId }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   //에러처리
   if (typeof event === "string") return <div>{event}</div>;
 

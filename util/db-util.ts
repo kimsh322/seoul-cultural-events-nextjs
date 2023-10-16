@@ -23,7 +23,6 @@ export async function insertDocument(client: MongoClient, collection: string, co
 export async function getAllComments(client: MongoClient, collection: string, filter = {}) {
   const db = client.db("events");
   // comments 전부 받아오기
-  // sort {_id : -1} 은 _id를 내림차순으로 정렬하라는 뜻
   const documents = await db.collection(collection).find(filter).toArray();
 
   return documents;

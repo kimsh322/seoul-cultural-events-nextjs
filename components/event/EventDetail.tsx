@@ -27,13 +27,7 @@ export default function EventDetail({ event }: Props) {
           );
         })}
       </Grid>
-      <Button
-        variant="contained"
-        sx={{ bgcolor: "#001524" }}
-        href={event.ORG_LINK}
-        target="_blank"
-        size="large"
-      >
+      <Button variant="contained" sx={{ bgcolor: "#001524" }} href={event.ORG_LINK} target="_blank" size="large">
         자세히 보러가기
       </Button>
     </Grid>

@@ -31,11 +31,7 @@ function Comments({ eventId }: Props) {
     enabled: false,
   });
 
-  const {
-    mutate,
-    isLoading: isLoadingPostComment,
-    isSuccess: isPostSuccess,
-  } = useMutation(postComment);
+  const { mutate, isLoading: isLoadingPostComment, isSuccess: isPostSuccess } = useMutation(postComment);
 
   useEffect(() => {
     // 댓글 보기 클릭시, 댓글생성 성공시 데이터 불러오기

@@ -27,9 +27,9 @@ export async function getEvent(eventId: string) {
 export async function getScrollEvents({ pageParam = 12 }) {
   try {
     const response = await axios.get(
-      `http://openapi.seoul.go.kr:8088/${
-        process.env.NEXT_PUBLIC_CULTURAL_EVENTS_AUTHORIZE
-      }/json/culturalEventInfo/${pageParam - 11}/${pageParam}/`
+      `http://openapi.seoul.go.kr:8088/${process.env.NEXT_PUBLIC_CULTURAL_EVENTS_AUTHORIZE}/json/culturalEventInfo/${
+        pageParam - 11
+      }/${pageParam}/`
     );
     return response.data;
   } catch (error) {

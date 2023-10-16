@@ -18,11 +18,7 @@ interface Tag {
   [key: string]: string;
 }
 
-export default function NewComment({
-  addCommentHandler,
-  isLoadingPostComment,
-  isPostSuccess,
-}: Props) {
+export default function NewComment({ addCommentHandler, isLoadingPostComment, isPostSuccess }: Props) {
   const initialValue = { nickname: "", password: "", comment: "" };
   const [inputValue, setInputValue] = useState(initialValue);
 
