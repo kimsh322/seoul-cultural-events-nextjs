@@ -7,6 +7,7 @@ interface NewComment {
   comment: string;
   password: string;
   eventId: string;
+  date: string;
   _id?: ObjectId;
 }
 
@@ -23,12 +24,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "POST") {
     const { nickname, comment, password } = req.body;
-
+    const date = new Date().toString();
     const newComment: NewComment = {
       nickname,
       comment,
       eventId,
       password,
+      date,
     };
 
     let result;

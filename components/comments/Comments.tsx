@@ -10,6 +10,7 @@ import { Box, Button } from "@mui/material";
 export interface Comment extends PostComment {
   eventId: string;
   _id: ObjectId;
+  date: string;
 }
 
 interface Props {

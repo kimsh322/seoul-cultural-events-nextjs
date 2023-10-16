@@ -1,4 +1,4 @@
-import { List, ListItem, Typography } from "@mui/material";
+import { Box, List, ListItem, Typography } from "@mui/material";
 import { Comment } from "./Comments";
 
 interface Props {
@@ -9,6 +9,7 @@ export default function CommentList({ items }: Props) {
   return (
     <List sx={{ width: 1, px: 2 }}>
       {items.toReversed().map((item: Comment) => {
+        const parsingDate = new Date(item.date).toLocaleString("ko-kr");
         return (
           <ListItem
             alignItems="flex-start"
@@ -16,8 +17,11 @@ export default function CommentList({ items }: Props) {
             key={item._id.toString()}
             sx={{ display: "flex", flexDirection: "column", py: 2 }}
           >
-            <Typography sx={{ mb: 2 }}>{item.nickname}</Typography>
-            <Typography>{item.comment}</Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: 1 }}>
+              <Typography sx={{ mb: 2 }}>{item.nickname}</Typography>
+              <Typography>{parsingDate}</Typography>
+            </Box>
+            <pre>{item.comment}</pre>
           </ListItem>
         );
       })}
