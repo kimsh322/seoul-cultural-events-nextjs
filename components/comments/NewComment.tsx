@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Loading from "../Loading";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 export interface PostComment {
   nickname: string;
@@ -13,59 +14,84 @@ interface Props {
   isPostSuccess: boolean;
 }
 
+interface Tag {
+  [key: string]: string;
+}
+
 export default function NewComment({
   addCommentHandler,
   isLoadingPostComment,
   isPostSuccess,
 }: Props) {
-  const nicknameInputRef = useRef<HTMLInputElement>(null);
-  const passwordInputRef = useRef<HTMLInputElement>(null);
-  const commentInputRef = useRef<HTMLTextAreaElement>(null);
+  const initialValue = { nickname: "", password: "", comment: "" };
+  const [inputValue, setInputValue] = useState(initialValue);
 
   // post요청 성공시 input태그 초기화
   useEffect(() => {
-    if (isPostSuccess) {
-      if (nicknameInputRef.current !== null) nicknameInputRef.current.value = "";
-      if (commentInputRef.current !== null) commentInputRef.current.value = "";
-      if (passwordInputRef.current !== null) passwordInputRef.current.value = "";
-    }
+    if (isPostSuccess) setInputValue(initialValue);
   }, [isPostSuccess]);
+
+  const tag: Tag = { 닉네임: "nickname", 비밀번호: "password", 댓글: "comment" };
+  const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    const newObj = { ...inputValue, [tag[name]]: value };
+    setInputValue(newObj);
+  };
 
   function sendCommentHandler(event: React.FormEvent) {
     event.preventDefault();
-    let enteredNickname = "";
-    let enteredComment = "";
-    let enteredPassword = "";
-    if (nicknameInputRef.current !== null) enteredNickname = nicknameInputRef.current.value;
-    if (commentInputRef.current !== null) enteredComment = commentInputRef.current.value;
-    if (passwordInputRef.current !== null) enteredPassword = passwordInputRef.current.value;
-
-    addCommentHandler({
-      nickname: enteredNickname,
-      comment: enteredComment,
-      password: enteredPassword,
-    });
+    const { nickname, password, comment } = inputValue;
+    addCommentHandler({ nickname, comment, password });
   }
 
   return (
     <>
-      <form onSubmit={sendCommentHandler}>
-        <div>
-          <div>
-            <label htmlFor="email">Nickname</label>
-            <input id="nickname" ref={nicknameInputRef} />
-          </div>
-          <div>
-            <label htmlFor="name">password</label>
-            <input type="text" id="password" ref={passwordInputRef} />
-          </div>
-        </div>
-        <div>
-          <label htmlFor="comment">Your comment</label>
-          <textarea id="comment" rows={5} ref={commentInputRef}></textarea>
-        </div>
-        <button>Submit</button>
-      </form>
+      <Box component="form" onSubmit={sendCommentHandler} sx={{ mt: 3, px: 2 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="닉네임"
+              required
+              fullWidth
+              id="nickname"
+              label="닉네임"
+              autoFocus
+              value={inputValue.nickname}
+              onChange={onChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              fullWidth
+              id="password"
+              label="비밀번호(4자)"
+              name="비밀번호"
+              value={inputValue.password}
+              onChange={onChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id="comment"
+              label="댓글"
+              name="댓글"
+              multiline
+              rows={4}
+              value={inputValue.comment}
+              onChange={onChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>* 비밀번호는 댓글 수정 및 삭제에 사용됩니다.</Typography>
+          </Grid>
+        </Grid>
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          댓글 작성
+        </Button>
+      </Box>
       {isLoadingPostComment && <Loading />}
     </>
   );
