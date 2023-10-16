@@ -48,7 +48,7 @@ function Comments({ eventId }: Props) {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Button variant="outlined" sx={{ mt: 3, mb: 2, px: 5 }} onClick={toggleCommentsHandler}>
+      <Button color="success" variant="outlined" sx={{ mt: 3, mb: 2, px: 5 }} onClick={toggleCommentsHandler}>
         댓글 {showComments ? "숨기기" : "보기"}
       </Button>
       {showComments && (

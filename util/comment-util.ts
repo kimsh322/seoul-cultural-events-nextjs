@@ -7,12 +7,8 @@ interface PostCommentArgs {
 }
 
 export async function getComments(eventId: string) {
-  try {
-    const response = await axios.get(`/api/comments/${eventId}`);
-    return response.data;
-  } catch (error) {
-    return "요청에 문제가 발생했습니다.";
-  }
+  const response = await axios.get(`/api/comments/${eventId}`);
+  return response.data;
 }
 
 export async function postComment({ eventId, commentData }: PostCommentArgs) {

@@ -8,7 +8,7 @@ interface Props {
 
 export default function EventBox({ event }: Props) {
   return (
-    <Container sx={{ pt: 5, bgcolor: "#FFF2D8" }}>
+    <Container sx={{ pt: 5 }}>
       <Typography component="h4" variant="h4" align="center" sx={{ pb: 5 }}>
         {event.TITLE}
       </Typography>

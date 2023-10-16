@@ -4,6 +4,7 @@ import { getEvent } from "@/util/fetch-events";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Comments from "@/components/comments/Comments";
 import Footer from "@/components/Footer";
+import { Container } from "@mui/material";
 
 export default function EventDetailPage({ event, eventId }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   //에러처리
@@ -12,11 +13,11 @@ export default function EventDetailPage({ event, eventId }: InferGetServerSidePr
   const eventData: Event = event.culturalEventInfo.row[0];
 
   return (
-    <>
+    <Container sx={{ bgcolor: "#FFF2D8" }}>
       <EventBox event={eventData} />
       <Comments eventId={eventId} />
       <Footer />
-    </>
+    </Container>
   );
 }
 

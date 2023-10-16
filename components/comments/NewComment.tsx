@@ -42,7 +42,7 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
 
   return (
     <>
-      <Box component="form" onSubmit={sendCommentHandler} sx={{ mt: 3, px: 2 }}>
+      <Box component="form" onSubmit={sendCommentHandler} sx={{ mt: 3, mb: 5, px: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -54,6 +54,7 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
               autoFocus
               value={inputValue.nickname}
               onChange={onChange}
+              sx={{ bgcolor: "#fff" }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -61,10 +62,12 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
               required
               fullWidth
               id="password"
-              label="비밀번호(4자)"
+              label="댓글 비밀번호(최대 6자)"
               name="비밀번호"
               value={inputValue.password}
               onChange={onChange}
+              inputProps={{ maxLength: 6 }}
+              sx={{ bgcolor: "#fff" }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -78,13 +81,14 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
               rows={4}
               value={inputValue.comment}
               onChange={onChange}
+              sx={{ bgcolor: "#fff" }}
             />
           </Grid>
           <Grid item xs={12}>
             <Typography>* 비밀번호는 댓글 수정 및 삭제에 사용됩니다.</Typography>
           </Grid>
         </Grid>
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, bgcolor: "#445D48" }}>
           댓글 작성
         </Button>
       </Box>

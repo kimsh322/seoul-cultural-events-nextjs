@@ -1,3 +1,4 @@
+import { List, ListItem, Typography } from "@mui/material";
 import { Comment } from "./Comments";
 
 interface Props {
@@ -6,17 +7,20 @@ interface Props {
 
 export default function CommentList({ items }: Props) {
   return (
-    <ul>
+    <List sx={{ width: 1, px: 2 }}>
       {items.toReversed().map((item: Comment) => {
         return (
-          <li key={item._id.toString()}>
-            <p>{item.comment}</p>
-            <div>
-              <address>By {item.nickname}</address>
-            </div>
-          </li>
+          <ListItem
+            alignItems="flex-start"
+            divider
+            key={item._id.toString()}
+            sx={{ display: "flex", flexDirection: "column", py: 2 }}
+          >
+            <Typography sx={{ mb: 2 }}>{item.nickname}</Typography>
+            <Typography>{item.comment}</Typography>
+          </ListItem>
         );
       })}
-    </ul>
+    </List>
   );
 }
