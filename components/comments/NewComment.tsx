@@ -1,11 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Loading from "../Loading";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import StarRating from "./StarRating";
 
 export interface PostComment {
   nickname: string;
   comment: string;
   password: string;
+  rating: number;
 }
 
 interface Props {
@@ -20,14 +22,18 @@ interface Tag {
 
 export default function NewComment({ addCommentHandler, isLoadingPostComment, isPostSuccess }: Props) {
   const initialValue = { nickname: "", password: "", comment: "" };
+  const [rating, setRating] = useState(0);
   const [inputValue, setInputValue] = useState(initialValue);
 
   // post요청 성공시 input태그 초기화
   useEffect(() => {
-    if (isPostSuccess) setInputValue(initialValue);
+    if (isPostSuccess) {
+      setInputValue(initialValue);
+      setRating(0);
+    }
   }, [isPostSuccess]);
 
-  const tag: Tag = { 닉네임: "nickname", 비밀번호: "password", 댓글: "comment" };
+  const tag: Tag = { 닉네임: "nickname", 비밀번호: "password", 코멘트: "comment" };
   const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     const newObj = { ...inputValue, [tag[name]]: value };
@@ -37,7 +43,7 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
   function sendCommentHandler(event: React.FormEvent) {
     event.preventDefault();
     const { nickname, password, comment } = inputValue;
-    addCommentHandler({ nickname, comment, password });
+    addCommentHandler({ nickname, comment, password, rating });
   }
 
   return (
@@ -62,7 +68,7 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
               required
               fullWidth
               id="password"
-              label="댓글 비밀번호(최대 6자)"
+              label="리뷰 비밀번호(최대 6자)"
               name="비밀번호"
               value={inputValue.password}
               onChange={onChange}
@@ -75,8 +81,8 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
               required
               fullWidth
               id="comment"
-              label="댓글"
-              name="댓글"
+              label="코멘트"
+              name="코멘트"
               multiline
               rows={4}
               value={inputValue.comment}
@@ -85,11 +91,14 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography>* 비밀번호는 댓글 수정 및 삭제에 사용됩니다.</Typography>
+            <StarRating rating={rating} setRating={setRating} />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography>* 비밀번호는 리뷰 수정 및 삭제에 사용됩니다.</Typography>
           </Grid>
         </Grid>
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, bgcolor: "#445D48" }}>
-          댓글 작성
+          리뷰 작성
         </Button>
       </Box>
       {isLoadingPostComment && <Loading />}

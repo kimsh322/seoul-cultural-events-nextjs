@@ -6,6 +6,7 @@ interface NewComment {
   nickname: string;
   comment: string;
   password: string;
+  rating: number;
   eventId: string;
   date: string;
   _id?: ObjectId;
@@ -23,7 +24,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   if (req.method === "POST") {
-    const { nickname, comment, password } = req.body;
+    const { nickname, comment, password, rating } = req.body;
     const date = new Date().toString();
     const newComment: NewComment = {
       nickname,
@@ -31,6 +32,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       eventId,
       password,
       date,
+      rating,
     };
 
     let result;
@@ -38,9 +40,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       result = await insertDocument(client, "comments", newComment);
       newComment._id = result.insertedId;
 
-      res.status(201).json({ message: "댓글 생성.", comment: newComment });
+      res.status(201).json({ message: "리뷰 생성.", comment: newComment });
     } catch (error) {
-      res.status(500).json({ message: "댓글 생성 실패!" });
+      res.status(500).json({ message: "리뷰 생성 실패!" });
     }
   }
 
