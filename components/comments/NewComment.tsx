@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import Loading from "../Loading";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import StarRating from "./StarRating";
+import PostCommentLoading from "./PostCommentLoading";
 
 export interface PostComment {
   nickname: string;
@@ -47,7 +47,7 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
   }
 
   return (
-    <>
+    <Box component="div" sx={{ position: "relative" }}>
       <Box component="form" onSubmit={sendCommentHandler} sx={{ mt: 3, mb: 5, px: 2 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -101,7 +101,7 @@ export default function NewComment({ addCommentHandler, isLoadingPostComment, is
           리뷰 작성
         </Button>
       </Box>
-      {isLoadingPostComment && <Loading />}
-    </>
+      <PostCommentLoading isLoadingPostComment={isLoadingPostComment} />
+    </Box>
   );
 }

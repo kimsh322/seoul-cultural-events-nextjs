@@ -59,8 +59,9 @@ function Comments({ eventId }: Props) {
           isPostSuccess={isPostSuccess}
         />
       )}
+      {showComments && isRefetching && <Loading />}
       {showComments && !isLoadingComments && <CommentList items={data.comments} />}
-      {showComments && (isLoadingComments || isRefetching) && <Loading />}
+      {showComments && isLoadingComments && <Loading />}
       {isError && <p>리뷰 로딩 에러!</p>}
     </Box>
   );

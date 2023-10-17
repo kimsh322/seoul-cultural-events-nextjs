@@ -13,11 +13,13 @@ export default function EventDetailPage({ event, eventId }: InferGetServerSidePr
   const eventData: Event = event.culturalEventInfo.row[0];
 
   return (
-    <Container sx={{ bgcolor: "#FFF2D8" }}>
-      <EventBox event={eventData} />
-      <Comments eventId={eventId} />
+    <>
+      <Container sx={{ bgcolor: "#FFF2D8" }}>
+        <EventBox event={eventData} />
+        <Comments eventId={eventId} />
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 }
 

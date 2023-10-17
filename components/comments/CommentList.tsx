@@ -25,6 +25,7 @@ export default function CommentList({ items }: Props) {
                   name="star-rating"
                   value={item.rating}
                   readOnly
+                  precision={0.5}
                   emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                 />
               </Box>
