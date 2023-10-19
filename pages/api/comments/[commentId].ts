@@ -7,13 +7,12 @@ interface NewComment {
   comment: string;
   password: string;
   rating: number;
-  eventId: string;
   date: string;
   _id?: ObjectId;
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const eventId = req.query.eventId as string;
+  const commentId = req.query.commentId as string;
 
   let client;
   try {
@@ -29,7 +28,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const newComment: NewComment = {
       nickname,
       comment,
-      eventId,
       password,
       date,
       rating,
@@ -37,7 +35,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     let result;
     try {
-      result = await insertDocument(client, "comments", newComment);
+      result = await insertDocument(client, commentId, newComment);
       newComment._id = result.insertedId;
 
       res.status(201).json({ message: "리뷰 생성.", comment: newComment });
@@ -48,7 +46,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "GET") {
     try {
-      const documents = await getAllComments(client, "comments", { eventId: eventId });
+      const documents = await getAllComments(client, commentId);
       res.status(200).json({ comments: documents });
     } catch (error) {
       res.status(500).json({ message: "서버 문제 발생!" });

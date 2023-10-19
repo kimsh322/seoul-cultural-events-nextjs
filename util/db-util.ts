@@ -15,15 +15,15 @@ export async function connectDatabase() {
 
 export async function insertDocument(client: MongoClient, collection: string, comment: Comment) {
   // 'events' db에 연결
-  const db = client.db("events");
+  const db = client.db("comments");
   const result = await db.collection(collection).insertOne(comment);
   return result;
 }
 
-export async function getAllComments(client: MongoClient, collection: string, filter = {}) {
-  const db = client.db("events");
+export async function getAllComments(client: MongoClient, collection: string) {
+  const db = client.db("comments");
   // comments 전부 받아오기
-  const documents = await db.collection(collection).find(filter).toArray();
+  const documents = await db.collection(collection).find().toArray();
 
   return documents;
 }

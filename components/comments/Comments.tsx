@@ -14,10 +14,10 @@ export interface Comment extends PostComment {
 }
 
 interface Props {
-  eventId: string;
+  title: string;
 }
 
-function Comments({ eventId }: Props) {
+function Comments({ title }: Props) {
   const [showComments, setShowComments] = useState(false);
 
   const {
@@ -27,8 +27,8 @@ function Comments({ eventId }: Props) {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["comments", +eventId],
-    queryFn: () => getComments(eventId),
+    queryKey: ["comments", title],
+    queryFn: () => getComments(title),
     enabled: false,
   });
 
@@ -44,7 +44,7 @@ function Comments({ eventId }: Props) {
   }
 
   function addCommentHandler(commentData: PostComment) {
-    mutate({ eventId, commentData });
+    mutate({ title, commentData });
   }
 
   return (

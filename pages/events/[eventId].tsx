@@ -16,7 +16,7 @@ export default function EventDetailPage({ event, eventId }: InferGetServerSidePr
     <>
       <Container sx={{ bgcolor: "#FFF2D8" }}>
         <EventBox event={eventData} />
-        <Comments eventId={eventId} />
+        <Comments title={eventData.TITLE} />
       </Container>
       <Footer />
     </>

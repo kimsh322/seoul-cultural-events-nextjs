@@ -2,16 +2,16 @@ import { PostComment } from "@/components/comments/NewComment";
 import axios from "axios";
 
 interface PostCommentArgs {
-  eventId: string;
+  title: string;
   commentData: PostComment;
 }
 
-export async function getComments(eventId: string) {
-  const response = await axios.get(`/api/comments/${eventId}`);
+export async function getComments(title: string) {
+  const response = await axios.get(`/api/comments/${title}`);
   return response.data;
 }
 
-export async function postComment({ eventId, commentData }: PostCommentArgs) {
-  const response = await axios.post(`/api/comments/${eventId}`, commentData);
+export async function postComment({ title, commentData }: PostCommentArgs) {
+  const response = await axios.post(`/api/comments/${title}`, commentData);
   return response.data;
 }
